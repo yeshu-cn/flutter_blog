@@ -26,7 +26,7 @@ jobs:
           git config --global user.name yeshu
           git status
           # 更改此远程URL，例如查看您的远程URL是 https://github.com/onatcipli/flutter_web.git 然后改成以下内容
-          git remote add origin https://${{secrets.commit_secret}}@github.com:yeshu-cn/flutter_blog.git
+          git remote add origin https://${{secrets.commit_secret}}@github.com/yeshu-cn/flutter_blog.git
           git checkout -b gh-pages
           git add --all
           git commit -m "update"
