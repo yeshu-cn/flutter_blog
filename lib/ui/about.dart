@@ -17,6 +17,7 @@ class _AboutState extends State<About> {
           children: const [
             TopBar(),
             Text('about'),
+            Text('snowboarding'),
           ],
         ),
       ),
