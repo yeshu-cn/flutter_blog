@@ -6,14 +6,14 @@ import 'package:flutter_blog/ui/top_bar.dart';
 import 'package:flutter_blog/ui/utils/utils.dart';
 import 'package:intl/intl.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class CategoryDetailPage extends StatefulWidget {
+  const CategoryDetailPage({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<CategoryDetailPage> createState() => _CategoryDetailPageState();
 }
 
-class _HomeState extends State<Home> {
+class _CategoryDetailPageState extends State<CategoryDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,22 +21,18 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             const TopBar(
-              highLightHome: true,
+              highLightCategory: true,
             ),
             FutureBuilder(
               builder: (BuildContext context,
                   AsyncSnapshot<List<PostItem>> snapshot) {
                 if (snapshot.hasData) {
-                  var postItemWidgets =
-                      snapshot.data!.map((e) => _buildPostItem(e)).toList();
-                  postItemWidgets.insert(
-                      0, _buildPostCountText(snapshot.data!.length));
                   return Padding(
                     padding:
                         const EdgeInsets.only(left: 500, right: 500, top: 100),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: postItemWidgets,
+                      children:
+                          snapshot.data!.map((e) => _buildPostItem(e)).toList(),
                     ),
                   );
                 } else {
@@ -47,16 +43,6 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildPostCountText(int count) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20, left: 8),
-      child: Text(
-        'Great! $count posts in total. Keep on posting.',
-        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }
