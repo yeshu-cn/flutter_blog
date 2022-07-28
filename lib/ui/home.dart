@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/di/di.dart';
 import 'package:flutter_blog/domain/post_repository.dart';
+import 'package:flutter_blog/ui/bottom_bar.dart';
 import 'package:flutter_blog/ui/post_detail_page.dart';
 import 'package:flutter_blog/ui/time_line_node.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
 import 'package:flutter_blog/ui/utils/utils.dart';
 import 'package:intl/intl.dart';
 import "package:collection/collection.dart";
-
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -27,12 +27,16 @@ class _HomeState extends State<Home> {
               highLightHome: true,
             ),
             FutureBuilder(
-              builder: (BuildContext context, AsyncSnapshot<List<PostItem>> snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<PostItem>> snapshot) {
                 if (snapshot.hasData) {
-                  var postItemWidgets = _buildPostItems(_groupPostItems(snapshot.data!));
-                  postItemWidgets.insert(0, _buildPostCountText(snapshot.data!.length));
+                  var postItemWidgets =
+                      _buildPostItems(_groupPostItems(snapshot.data!));
+                  postItemWidgets.insert(
+                      0, _buildPostCountText(snapshot.data!.length));
                   return Padding(
-                    padding: const EdgeInsets.only(left: 500, right: 500, top: 100),
+                    padding:
+                        const EdgeInsets.only(left: 500, right: 500, top: 100),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: postItemWidgets,
@@ -44,6 +48,48 @@ class _HomeState extends State<Home> {
               },
               future: getIt.get<PostRepository>().getPostList(0, 10),
             ),
+            const SizedBox(
+              height: 40,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 500, right: 500),
+              child: Divider(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 500),
+              child: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('1'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('2'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('3'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('...'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('14'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('>'),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+            const BottomBar(),
           ],
         ),
       ),
@@ -51,35 +97,18 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildPostCountText(int count) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20, left: 7),
-      child: Row(
-        children: [
-          Container(
-            height: 10,
-            width: 10,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            'Great! $count posts in total. Keep on posting.',
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-        ],
-      ),
-    );
+    return TimeLineNode(
+        firstNode: true,
+        child: Text(
+          'Great! $count posts in total. Keep on posting.',
+          style: Theme.of(context).textTheme.subtitle1,
+        ));
   }
 
   Widget _buildPostItem(PostItem postItem) {
     var dateFormat = DateFormat('yyyy-MM-dd');
     var theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return TimeLineNode(
       child: InkWell(
         onTap: () {
           navigateTo(
@@ -88,13 +117,14 @@ class _HomeState extends State<Home> {
                 createTime: postItem.createTime,
               ));
         },
-        child: TimeLineNode(child: Row(
+        child: Row(
           children: [
             const SizedBox(
               width: 10,
             ),
             Text(
-              dateFormat.format(DateTime.fromMillisecondsSinceEpoch(postItem.createTime)),
+              dateFormat.format(
+                  DateTime.fromMillisecondsSinceEpoch(postItem.createTime)),
               style: theme.textTheme.subtitle1,
             ),
             const SizedBox(
@@ -102,7 +132,7 @@ class _HomeState extends State<Home> {
             ),
             Text(postItem.title, style: theme.textTheme.subtitle1),
           ],
-        ),),
+        ),
       ),
     );
   }
@@ -110,7 +140,9 @@ class _HomeState extends State<Home> {
   Map<String, List<PostItem>> _groupPostItems(List<PostItem> list) {
     var dateFormat = DateFormat('yyyy');
     var groupByDate = groupBy<PostItem, String>(
-        list, (item) => dateFormat.format(DateTime.fromMillisecondsSinceEpoch(item.createTime)));
+        list,
+        (item) => dateFormat
+            .format(DateTime.fromMillisecondsSinceEpoch(item.createTime)));
     return groupByDate;
   }
 
@@ -124,35 +156,18 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildYearGroupTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
+    return TimeLineNode(
+      height: 80,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 8,
-                  width: 8,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(
-                  width: 14,
-                ),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          ],
+        padding: const EdgeInsets.only(left: 10),
+        child: Text(
+          title,
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(fontWeight: FontWeight.bold),
         ),
       ),
     );
   }
-
 }

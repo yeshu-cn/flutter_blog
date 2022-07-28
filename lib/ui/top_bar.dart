@@ -27,7 +27,7 @@ class _TopBarState extends State<TopBar> {
       children: [
         Container(
           decoration: const BoxDecoration(color: Color(0xffF5F5F5)),
-          height: 100,
+          height: 80,
           width: MediaQuery.of(context).size.width,
           child: Row(
             mainAxisSize: MainAxisSize.max,
