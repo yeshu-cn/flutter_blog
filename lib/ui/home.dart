@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/di/di.dart';
-import 'package:flutter_blog/domain/post_repository.dart';
+import 'package:flutter_blog/domain/post_service.dart';
 import 'package:flutter_blog/ui/post_list.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
 
@@ -24,7 +24,6 @@ class _HomeState extends State<Home> {
             ),
             PostList(
               loadData: getPostList,
-              loadDataCount: getPostCount,
             ),
             const SizedBox(
               height: 80,
@@ -35,11 +34,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<List<PostItem>> getPostList(int offset, int limit, String? category) async {
-    return await getIt.get<PostRepository>().getPostListByCategory('category', offset, limit);
-  }
-
-  Future<int> getPostCount(String? category) async {
-    return await getIt.get<PostRepository>().getPostCountByCategory('category');
+  Future<PostListResponse> getPostList(int offset, int limit, String? category) async {
+    return await getIt.get<PostService>().getPostList(offset, limit);
   }
 }

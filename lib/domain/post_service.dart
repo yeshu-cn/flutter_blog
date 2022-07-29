@@ -1,5 +1,3 @@
-import 'package:flutter_blog/domain/usecase/get_categories_usecase.dart';
-
 class PostItem {
   final String title;
   final int createTime;
@@ -25,18 +23,24 @@ class CategoryItem {
   CategoryItem(this.name, this.postCount);
 }
 
-abstract class PostRepository {
-  Future<List<PostItem>> getPostList(int offset, int limit);
+class PostListResponse {
+  final List<PostItem> data;
+  final int totalCount;
 
-  Future<int> getPostCount();
+  const PostListResponse({
+    required this.data,
+    required this.totalCount,
+  });
+}
+
+abstract class PostService {
+  Future<PostListResponse> getPostList(int offset, int limit);
 
   Future<PostDetail> getPostDetail(int createTime);
 
   Future<List<PostItem>> getPostListByTag(String tag);
 
-  Future<List<PostItem>> getPostListByCategory(String category, int offset, int limit);
-
-  Future<int> getPostCountByCategory(String category);
+  Future<PostListResponse> getPostListByCategory(String category, int offset, int limit);
 
   Future<List<CategoryItem>> getCategories();
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/di/di.dart';
-import 'package:flutter_blog/domain/post_repository.dart';
+import 'package:flutter_blog/domain/post_service.dart';
 import 'package:flutter_blog/ui/post_list.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
 
@@ -25,7 +25,6 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
             ),
             PostList(
               loadData: getPostList,
-              loadDataCount: getPostCount,
               category: widget.category,
             ),
           ],
@@ -34,22 +33,8 @@ class _CategoryDetailPageState extends State<CategoryDetailPage> {
     );
   }
 
-  Future<List<PostItem>> getPostList(int offset, int limit, String? category) async {
-    print('----$category');
-    var ret = await getIt.get<PostRepository>().getPostListByCategory(category!, offset, limit);
-    return ret;
+  Future<PostListResponse> getPostList(int offset, int limit, String? category) async {
+    return await getIt.get<PostService>().getPostListByCategory(category!, offset, limit);
   }
 
-  Future<int> getPostCount(String? category) async {
-    print('----$category');
-    return await getIt.get<PostRepository>().getPostCountByCategory(category!);
-  }
-
-// Future<List<PostItem>> getPostList(int offset, int limit, String? category) async {
-//   return await getIt.get<PostRepository>().getPostListByCategory('category', offset, limit);
-// }
-//
-// Future<int> getPostCount(String? category) async {
-//   return await getIt.get<PostRepository>().getPostCountByCategory('category');
-// }
 }

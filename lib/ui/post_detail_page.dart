@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/di/di.dart';
-import 'package:flutter_blog/domain/post_repository.dart';
+import 'package:flutter_blog/domain/post_service.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -22,7 +22,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
           children: [
             const TopBar(),
             FutureBuilder(
-              future: getIt.get<PostRepository>().getPostDetail(widget.createTime),
+              future: getIt.get<PostService>().getPostDetail(widget.createTime),
               builder: (BuildContext context, AsyncSnapshot<PostDetail> snapshot) {
                 if (snapshot.hasData) {
                   return Markdown(
