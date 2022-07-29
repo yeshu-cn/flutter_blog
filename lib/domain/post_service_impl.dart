@@ -46,6 +46,10 @@ class PostServiceImpl implements PostService {
 
   @override
   Future<List<CategoryItem>> getCategories() async {
-    return [];
+    return [
+      CategoryItem('Android', 3),
+      CategoryItem('iOS', 4),
+      CategoryItem('Flutter', 3),
+    ];
   }
 }

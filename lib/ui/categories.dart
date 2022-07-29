@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/di/di.dart';
-import 'package:flutter_blog/domain/usecase/get_categories_usecase.dart';
+import 'package:flutter_blog/domain/post_service.dart';
 import 'package:flutter_blog/ui/category_detail_page.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
 import 'package:flutter_blog/ui/utils/utils.dart';
@@ -45,7 +45,7 @@ class _CategoriesState extends State<Categories> {
               } else {
                 return const CircularProgressIndicator();
               }
-            }, future: getIt.get<GetCategoriesUseCase>().execute(),),
+            }, future: getIt.get<PostService>().getCategories(),),
           ],
         ),
       ),
