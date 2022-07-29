@@ -1,19 +1,23 @@
 import 'package:flutter_blog/domain/post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
+  var data = List.generate(
+      50,
+      (index) => PostItem(
+          'Post title $index', 1556349134000 + 2626560000 * index, index ~/ 2 == 0 ? 'Android' : 'iOS', 1556349134000));
 
   @override
   Future<List<PostItem>> getPostList(int offset, int limit) async {
-    return [
-      PostItem('Flutter 代码生成', 1658905934000),
-      PostItem('移动端App架构Demo mock_app', 1656313934000),
-      PostItem('《整洁架构之道》笔记', 1653635534000),
-      PostItem('日志使用总结', 1651043534000),
-      PostItem('分层架构的演进', 1619507534000),
-      PostItem('防御使编程和契约式编程', 1587971534000),
-      PostItem('Repository设计', 1587971534000),
-      PostItem(' Android混淆和反编译结果查看', 1556349134000),
-    ];
+    data.sort((a, b) => b.createTime.compareTo(a.createTime));
+    int start = offset;
+    int end = offset + limit;
+    if (start > data.length - 1) {
+      return [];
+    }
+    if (end > data.length - 1) {
+      end = data.length - 1;
+    }
+    return data.sublist(start, end);
   }
 
   @override
@@ -22,14 +26,38 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<List<PostItem>> getPostListByCategory(String category) {
-    // TODO: implement getPostListByCategory
-    throw UnimplementedError();
+  Future<List<PostItem>> getPostListByCategory(String category, int offset, int limit) async {
+    print('------222');
+    data.sort((a, b) => b.createTime.compareTo(a.createTime));
+    int start = offset;
+    int end = offset + limit;
+    if (start > data.length - 1) {
+      return [];
+    }
+    if (end > data.length - 1) {
+      end = data.length - 1;
+    }
+    return data.sublist(start, end);
   }
 
   @override
-  Future<List<PostItem>> getPostListByTag(String tag) {
-    // TODO: implement getPostListByTag
-    throw UnimplementedError();
+  Future<int> getPostCountByCategory(String category) async {
+    print('------111');
+    return data.length;
+  }
+
+  @override
+  Future<List<PostItem>> getPostListByTag(String tag) async {
+    return [];
+  }
+
+  @override
+  Future<int> getPostCount() async {
+    return data.length;
+  }
+
+  @override
+  Future<List<CategoryItem>> getCategories() async {
+    return [];
   }
 }

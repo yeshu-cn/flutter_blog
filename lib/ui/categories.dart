@@ -68,7 +68,7 @@ class _CategoriesState extends State<Categories> {
     var theme = Theme.of(context);
     return InkWell(
       onTap: (){
-        navigateTo(context, const CategoryDetailPage());
+        navigateTo(context, CategoryDetailPage(category: item.name,));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
