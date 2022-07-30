@@ -1,0 +1,1 @@
+{"title":"C语言数组退化为指针","createTime":1442101042000,"updateTime":1442101480000,"category":"default","content":" \n  \n **数组在除了3种情况外, 其他时候都要\"退化\"成指向首元素的指针** \n  \n  比如对 char s[10] = \"china\";  这3中例外情况是:   \n  \n 1. sizeof(s)  \n 2. &s; \n 3. 用来初始化s的\"china\"; \n  \n 除了上述3种情况外,s都会退化成&s[0], 这就是数组变量的操作方式 \n  \n 参考：http://bbs.chinaunix.net/thread-1031622-1-1.html"}
