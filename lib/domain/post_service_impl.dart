@@ -1,42 +1,55 @@
+import 'dart:convert';
 import 'package:flutter_blog/domain/post_service.dart';
+import 'package:flutter/services.dart';
 
 class PostServiceImpl implements PostService {
-  var data = List.generate(
-      50,
-      (index) => PostItem(
-          'Post title $index', 1556349134000 + 2626560000 * index, index ~/ 2 == 0 ? 'Android' : 'iOS', 1556349134000));
-
   @override
   Future<PostListResponse> getPostList(int offset, int limit) async {
-    data.sort((a, b) => b.createTime.compareTo(a.createTime));
+    var data = await rootBundle.loadString("assets/api/posts.json");
+    var jsonData = jsonDecode(data);
+    var postList =
+        List<PostItem>.from(jsonData.map((x) => PostItem.fromJson(x)));
+
+    postList.sort((a, b) => b.createTime.compareTo(a.createTime));
     int start = offset;
     int end = offset + limit;
-    if (start > data.length - 1) {
-      return PostListResponse(totalCount: data.length, data: []);
+    if (start > postList.length - 1) {
+      return PostListResponse(totalCount: postList.length, data: []);
     }
-    if (end > data.length - 1) {
-      end = data.length - 1;
+    if (end > postList.length) {
+      end = postList.length;
     }
-    return PostListResponse(data: data.sublist(start, end), totalCount: data.length);
+    return PostListResponse(
+        data: postList.sublist(start, end), totalCount: postList.length);
   }
 
   @override
   Future<PostDetail> getPostDetail(int createTime) async {
-    return PostDetail('Flutter 代码生成', 1651043534000, '## Hello world');
+    var data = await rootBundle.loadString("assets/post/$createTime.json");
+    return PostDetail.fromJson(jsonDecode(data));
   }
 
   @override
-  Future<PostListResponse> getPostListByCategory(String category, int offset, int limit) async {
-    data.sort((a, b) => b.createTime.compareTo(a.createTime));
+  Future<PostListResponse> getPostListByCategory(
+      String category, int offset, int limit) async {
+    var data = await rootBundle.loadString("assets/api/posts.json");
+    var jsonData = jsonDecode(data);
+    var postList =
+        List<PostItem>.from(jsonData.map((x) => PostItem.fromJson(x)))
+            .where((element) => element.category == category)
+            .toList();
+
+    postList.sort((a, b) => b.createTime.compareTo(a.createTime));
     int start = offset;
     int end = offset + limit;
-    if (start > data.length - 1) {
-      return PostListResponse(totalCount: data.length, data: []);
+    if (start > postList.length - 1) {
+      return PostListResponse(totalCount: postList.length, data: []);
     }
-    if (end > data.length - 1) {
-      end = data.length - 1;
+    if (end > postList.length) {
+      end = postList.length;
     }
-    return PostListResponse(data: data.sublist(start, end), totalCount: data.length);
+    return PostListResponse(
+        data: postList.sublist(start, end), totalCount: postList.length);
   }
 
   @override
@@ -46,10 +59,9 @@ class PostServiceImpl implements PostService {
 
   @override
   Future<List<CategoryItem>> getCategories() async {
-    return [
-      CategoryItem('Android', 3),
-      CategoryItem('iOS', 4),
-      CategoryItem('Flutter', 3),
-    ];
+    var data = await rootBundle.loadString("assets/api/categories.json");
+    var jsonData = jsonDecode(data);
+    return List<CategoryItem>.from(
+        jsonData.map((x) => CategoryItem.fromJson(x)));
   }
 }

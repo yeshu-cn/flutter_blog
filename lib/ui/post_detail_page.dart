@@ -21,20 +21,23 @@ class _PostDetailPageState extends State<PostDetailPage> {
         child: Column(
           children: [
             const TopBar(),
-            FutureBuilder(
-              future: getIt.get<PostService>().getPostDetail(widget.createTime),
-              builder: (BuildContext context, AsyncSnapshot<PostDetail> snapshot) {
-                if (snapshot.hasData) {
-                  return Markdown(
-                    data: snapshot.data!.content,
-                    shrinkWrap: true,
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+            Padding(
+              padding: const EdgeInsets.only(left: 500, right: 500),
+              child: FutureBuilder(
+                future: getIt.get<PostService>().getPostDetail(widget.createTime),
+                builder: (BuildContext context, AsyncSnapshot<PostDetail> snapshot) {
+                  if (snapshot.hasData) {
+                    return Markdown(
+                      data: snapshot.data!.content,
+                      shrinkWrap: true,
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
