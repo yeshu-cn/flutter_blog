@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 
 class About extends StatefulWidget {
@@ -39,10 +40,7 @@ class _AboutState extends State<About> {
                 builder:
                     (BuildContext context, AsyncSnapshot<String> snapshot) {
                   if (snapshot.hasData) {
-                    return MarkdownWidget(
-                      styleConfig: StyleConfig(
-
-                      ),
+                    return Markdown(
                       data: snapshot.data!,
                       shrinkWrap: true,
                     );

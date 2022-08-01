@@ -39,6 +39,7 @@ dependencies:
   collection: ^1.16.0
   markdown_widget: ^1.2.9
   url_launcher: ^6.1.5
+  flutter_markdown: ^0.6.10+3
 
 dev_dependencies:
   flutter_test:
