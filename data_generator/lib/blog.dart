@@ -41,6 +41,20 @@ Future<void> createPostDetail(PostDetail data) async {
   print('create post detail json file:${file.path}');
 }
 
+void copyImageToWebDir(int postCreateTime, File imageFile) {
+  Directory dir = Directory('./../web/images/$postCreateTime');
+  if (!dir.existsSync()) {
+    dir.createSync(recursive: true);
+  }
+  imageFile.copySync('./../web/images/$postCreateTime/${imageFile.uri.pathSegments.last}');
+}
+
+void copyPostImageToWebDir(PostDetail postDetail) async {
+  postDetail.imagePathList.forEachIndexed((index, element) {
+    copyImageToWebDir(postDetail.createTime, File(element));
+  });
+}
+
 Future<PostDetail> parsePostDetailFromMarkdown(FileSystemEntity entity) async {
   var lines = await (entity as File).readAsLines();
   lines.removeAt(0);
@@ -80,26 +94,61 @@ Future<PostDetail> parsePostDetailFromMarkdown(FileSystemEntity entity) async {
       content: content);
 }
 
+Future<PostDetail> parsePostDetailWithImage(Directory dir) async {
+  final List<FileSystemEntity> entities = await dir.list().toList();
+  // 删除这个默认的系统隐藏文件
+  entities.removeWhere((element) => element.path.endsWith('.DS_Store'));
+
+  PostDetail? postDetail;
+  List<String> imageList = [];
+  for (var element in entities) {
+    if (element is File) {
+      if (element.path.endsWith('.md')) {
+        // markdown文件
+        postDetail = await parsePostDetailFromMarkdown(element);
+        postDetail.hasImage = true;
+      } else {
+        imageList.add(element.path);
+      }
+    }
+  }
+  // 最终肯定有帖子，不为null
+  postDetail!.hasImage = true;
+  postDetail.imagePathList = imageList;
+  return postDetail;
+}
+
 void generateBlogData() async {
   try {
-    var dir = Directory('./source/post');
+    var dir = Directory('./data/post');
     final List<FileSystemEntity> entities = await dir.list().toList();
-    List<PostItem> postList = [];
+    List<PostDetail> postDetailList = [];
     for (var element in entities) {
       if (element is File && element.path.endsWith('.md')) {
         var postDetail = await parsePostDetailFromMarkdown(element);
-        postList.add(toPostItem(postDetail));
-        createPostDetail(postDetail);
+        postDetailList.add(postDetail);
       } else if (element is Directory) {
         // 目录直接拷贝过去
+        var postDetail = await parsePostDetailWithImage(element);
+        postDetailList.add(postDetail);
       }
     }
     // 按时间从大到小排序
-    postList.sort((a, b) => b.createTime.compareTo(a.createTime));
-    createPostsApi(postList);
+    postDetailList.sort((a, b) => b.createTime.compareTo(a.createTime));
+    // 创建post.md文件
+    for (var element in postDetailList) {createPostDetail(element);}
+    // 复制post的image到web目录中
+    var postWithImageList = postDetailList.where((element) => element.hasImage);
+    for (var element in postWithImageList) {
+      copyPostImageToWebDir(element);
+    }
+    // 创建posts.json
+    var postItemList = postDetailList.map((e) => toPostItem(e)).toList();
+    createPostsApi(postItemList);
 
+    // 创建categories.json
     List<CategoryItem> categories = [];
-    var categoryMap = groupBy<PostItem, String>(postList, (item) => item.category);
+    var categoryMap = groupBy<PostItem, String>(postItemList, (item) => item.category);
     categoryMap.forEach((key, value) {
       categories.add(CategoryItem(name: key, postCount: value.length));
     });

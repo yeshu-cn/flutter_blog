@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:markdown_widget/markdown_widget.dart';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
@@ -14,7 +13,6 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -60,6 +58,6 @@ class _AboutState extends State<About> {
   }
 
   Future<String> _loadAboutMarkdown() async {
-    return await rootBundle.loadString('assets/pages/test.md');
+    return await rootBundle.loadString('assets/pages/about.md');
   }
 }

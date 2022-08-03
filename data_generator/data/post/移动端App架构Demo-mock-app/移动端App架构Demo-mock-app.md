@@ -8,7 +8,7 @@ categories: 架构设计
 # MockApp
 通过分层和接口的架构设计，实现可以快速Mock,单元测试的APP实例。
 
-<image src='mock_app.png'>
+![](mock_app.png)
 
 ## 功能
 * 登录，注册。
@@ -30,12 +30,12 @@ data:持久层具体实现。
 
 di: 通过ServiceLocator简单实现依赖注入，达到控制反转。  
 
- <image src='4.jpg' width=50%>
+ ![4](4.jpg)
 
 domain层和data层中的代码，根据需求可能直接移动到服务端，就是常见到Server/Client模式。
 
 
-<image src='5.jpg' width=50%>
+ ![4](5.jpg)
 
   
 ## 思考

@@ -40,6 +40,7 @@ dependencies:
   markdown_widget: ^1.2.9
   url_launcher: ^6.1.5
   flutter_markdown: ^0.6.10+3
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:

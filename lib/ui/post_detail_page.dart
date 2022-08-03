@@ -1,10 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blog/di/di.dart';
 import 'package:flutter_blog/domain/post_service.dart';
 import 'package:flutter_blog/ui/toc_item.dart';
 import 'package:flutter_blog/ui/top_bar.dart';
-import 'package:markdown_widget/config/widget_config.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,7 +39,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     builder: (BuildContext context,
                         AsyncSnapshot<PostDetail> snapshot) {
                       if (snapshot.hasData) {
-                        return _buildMarkdown(snapshot.data!.content);
+                        return _buildMarkdown(
+                            snapshot.data!.createTime, snapshot.data!.content);
                       } else {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -71,7 +72,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
     );
   }
 
-  Widget _buildMarkdown(String data) => MarkdownWidget(
+  Widget _buildMarkdown(int createTime, String data) => MarkdownWidget(
         data: data,
         // childMargin: const EdgeInsets.only(top: 20),
         shrinkWrap: true,
@@ -84,6 +85,15 @@ class _PostDetailPageState extends State<PostDetailPage> {
         // }),
         styleConfig: StyleConfig(
           markdownTheme: MarkdownTheme.lightTheme,
+          imgBuilder: (String url, Map<String, String> attributes) {
+            // 构造图片地址并显示,点击显示图片原本大小
+            return ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 300, maxWidth: 500),
+              child: CachedNetworkImage(
+                imageUrl: "images/$createTime/$url",
+              ),
+            );
+          },
           pConfig: PConfig(
             textStyle: const TextStyle(height: 1.5),
             onLinkTap: (url) {

@@ -4,13 +4,16 @@ class PostDetail {
   final int updateTime;
   final String category;
   final String content;
+  bool hasImage;
+  List<String> imagePathList = [];
 
-  const PostDetail({
+  PostDetail({
     required this.title,
     required this.createTime,
     required this.updateTime,
     required this.category,
     required this.content,
+    this.hasImage = false,
   });
 
   Map<String, dynamic> toJson() {
