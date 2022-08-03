@@ -1,1 +1,0 @@
-{"title":"Android中系统设置中的清除数据会清除哪些数据","createTime":1441526647000,"updateTime":1441526693000,"category":"default","content":" \n  \n  \n \t\t会删除/data/data/com.packagename/目录下除lib目录外的所有文件. \n \t\t包括数据库，SharePreference文件，缓存文件等。 \n \t\t但不会删除sd卡上的文件"}

@@ -6,7 +6,7 @@ tags:
 
 # 数独
 
-![](1.jpg)
+![](app-sudoku/1.jpg)
 
 
 

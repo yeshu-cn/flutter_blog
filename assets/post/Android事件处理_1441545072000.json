@@ -1,1 +1,0 @@
-{"title":"Android事件处理","createTime":1441545072000,"updateTime":1441545083000,"category":"default","content":" \n  \n WindowManagerService负责接收和派发消息 \n  \n * 一个线程用于循环接收消息，并将消息放入消息队列 \n * 一个线程用于从消息队列中去消息，并将消息加工处理发送给对应的窗口 \n  \n  \n View收到消息后，先判断是否拦截，在确定是否处理事件。 \n 如果拦截，自己处理事件。如果不处理，将事件返回给父View处理。 \n 如果不拦截，将事件传递给子View"}
