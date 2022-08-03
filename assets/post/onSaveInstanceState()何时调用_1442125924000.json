@@ -1,1 +1,0 @@
-{"title":"onSaveInstanceState()何时调用","createTime":1442125924000,"updateTime":1442126260000,"category":"default","content":" \n  \n 当Activity可能被销毁时，就会被调用 \n  \n * 按下home键时 \n * 长按home键 \n * 横竖屏切换 \n * 屏幕关闭时 \n * 从Activty A中启动一个新的Activity \n  \n 默认的onSaveInstanceSate()函数会保存当前Activity中控件的一些属性，例如EditText输入的数据等。但是必须给这个控件指定一个id"}

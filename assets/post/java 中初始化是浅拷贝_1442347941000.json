@@ -1,1 +1,0 @@
-{"title":"java 中初始化是浅拷贝","createTime":1442347941000,"updateTime":1454282519000,"category":"default","content":" \n  \n ```java \n Student s1 = xx; \n Student s2 = s1; \n ``` \n s2和s1其实指向同一空间 \n  \n  \n ``` \n Person p(q); //此时拷贝构造函数被用来创建实例p \n Person p = q; //此时拷贝构造函数被用来在定义实例p时初始化p \n ``` \n c语言中这叫初始化 \n  \n 拷贝构造函数分：浅拷贝，深拷贝 \n 默认拷贝构造函数：默认拷贝构造函数执行的也是浅拷贝"}
