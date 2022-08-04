@@ -33,14 +33,10 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 SizedBox(
                   width: 1000,
                   child: FutureBuilder(
-                    future: getIt
-                        .get<PostService>()
-                        .getPostDetail(widget.createTime),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<PostDetail> snapshot) {
+                    future: getIt.get<PostService>().getPostDetail(widget.createTime),
+                    builder: (BuildContext context, AsyncSnapshot<PostDetail> snapshot) {
                       if (snapshot.hasData) {
-                        return _buildMarkdown(
-                            snapshot.data!.createTime, snapshot.data!.content);
+                        return _buildMarkdown(snapshot.data!.createTime, snapshot.data!.content);
                       } else {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -113,8 +109,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     child: IconButton(
                       onPressed: () {
                         Clipboard.setData(ClipboardData(text: text));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('复制成功')));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('复制成功')));
                       },
                       icon: const Icon(
                         Icons.content_copy,
@@ -127,9 +122,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
             },
             language: 'java',
           ),
-          ulConfig: UlConfig(
-              dotMargin: const EdgeInsets.all(10),
-              crossAxisAlignment: CrossAxisAlignment.center),
+          ulConfig: UlConfig(dotMargin: const EdgeInsets.all(10), crossAxisAlignment: CrossAxisAlignment.center),
           olConfig: OlConfig(
               olWrapper: ((Widget child) {
                 return Padding(

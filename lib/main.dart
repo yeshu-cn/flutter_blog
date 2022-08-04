@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/di/di.dart';
 import 'package:flutter_blog/ui/home.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   setupDi();
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Web',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)
       ),
       home: const Home(),
     );
