@@ -11,10 +11,14 @@ PostItem toPostItem(PostDetail detail) {
       title: detail.title, createTime: detail.createTime, updateTime: detail.updateTime, category: detail.category);
 }
 
+String _assetsPath = './../assets';
+String _webPath = './../web';
+String _postSourcePath = './data/post';
+
 // posts.json
 void createPostsApi(List<PostItem> data) {
   var jsonData = jsonEncode(data);
-  File file = File('./../assets/api/posts.json');
+  File file = File('$_assetsPath/api/posts.json');
   file.writeAsString(jsonData);
 
   print('create posts.json file :${file.path}, post count: ${data.length}');
@@ -23,7 +27,7 @@ void createPostsApi(List<PostItem> data) {
 // categories.json
 void createCategoryApi(List<CategoryItem> data) {
   var jsonData = jsonEncode(data);
-  File file = File('./../assets/api/categories.json');
+  File file = File('$_assetsPath/api/categories.json');
   file.writeAsString(jsonData);
 
   print('create categories.json file :${file.path}, category count: ${data.length}');
@@ -32,18 +36,18 @@ void createCategoryApi(List<CategoryItem> data) {
 // title_createTime.json
 Future<void> createPostDetail(PostDetail data) async {
   var jsonData = jsonEncode(data);
-  File file = File('./../assets/post/${data.createTime}.json');
+  File file = File('$_assetsPath/post/${data.createTime}.json');
   file.writeAsString(jsonData);
 
   print('create post detail json file:${file.path}');
 }
 
 void copyImageToWebDir(int postCreateTime, File imageFile) {
-  Directory dir = Directory('./../web/images/$postCreateTime');
+  Directory dir = Directory('$_webPath/images/$postCreateTime');
   if (!dir.existsSync()) {
     dir.createSync(recursive: true);
   }
-  imageFile.copySync('./../web/images/$postCreateTime/${imageFile.uri.pathSegments.last}');
+  imageFile.copySync('$_webPath/images/$postCreateTime/${imageFile.uri.pathSegments.last}');
 }
 
 void copyPostImageToWebDir(PostDetail postDetail) async {
@@ -115,9 +119,13 @@ Future<PostDetail> parsePostDetailWithImage(Directory dir) async {
   return postDetail;
 }
 
-void generateBlogData() async {
+void generateBlogData({required String postSourcePath, required String assetsPath, required String webPath}) async {
+  _postSourcePath = postSourcePath;
+  _assetsPath = assetsPath;
+  _webPath = webPath;
+
   try {
-    var dir = Directory('./data/post');
+    var dir = Directory(_postSourcePath);
     final List<FileSystemEntity> entities = await dir.list().toList();
     List<PostDetail> postDetailList = [];
     for (var element in entities) {
