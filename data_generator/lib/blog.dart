@@ -8,10 +8,7 @@ import 'package:intl/intl.dart';
 
 PostItem toPostItem(PostDetail detail) {
   return PostItem(
-      title: detail.title,
-      createTime: detail.createTime,
-      updateTime: detail.updateTime,
-      category: detail.category);
+      title: detail.title, createTime: detail.createTime, updateTime: detail.updateTime, category: detail.category);
 }
 
 // posts.json
@@ -136,7 +133,9 @@ void generateBlogData() async {
     // 按时间从大到小排序
     postDetailList.sort((a, b) => b.createTime.compareTo(a.createTime));
     // 创建post.md文件
-    for (var element in postDetailList) {createPostDetail(element);}
+    for (var element in postDetailList) {
+      createPostDetail(element);
+    }
     // 复制post的image到web目录中
     var postWithImageList = postDetailList.where((element) => element.hasImage);
     for (var element in postWithImageList) {
@@ -153,8 +152,15 @@ void generateBlogData() async {
       categories.add(CategoryItem(name: key, postCount: value.length));
     });
     createCategoryApi(categories);
-
-  } catch (e ){
+  } catch (e) {
     print('generateBlogData error: $e');
   }
+}
+
+void testReadFile() {
+  var file = File('./data/test.md');
+  var lines = file.readAsLinesSync();
+  lines.forEachIndexed((index, element) {
+    print(element);
+  });
 }
