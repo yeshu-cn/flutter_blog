@@ -9,3 +9,4 @@ assetsPath=./assets
 webPath=./web
 ./data_generator/bin/blog.exe $postPath $assetsPath $webPath
 
+flutter run -d chrome
