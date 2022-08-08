@@ -10,18 +10,19 @@ function createNewPost() {
 	if [ -z "$1" ]; then
 		echo "please input post name"
 	else
-		if [ -a $1.md ]; then
+		if [ -a "source/post/$1/$1.md" ]; then
 			echo "file $1.md already exists!!"
 		else
-			echo "create post file: $1.md"
-			touch $1.md
-			echo "---" > $1.md
-			echo "title: $1.md" >> $1.md
+			mkdir "source/post/$1"
+			echo "create post file: srouce/post/$1/$1.md"
+			touch "source/post/$1/$1.md"
+			echo "---" > "source/post/$1/$1.md"
+			echo "title: $1.md" >> "source/post/$1/$1.md"
 			date=$(date '+%Y-%m-%d %H:%M:%S')
-			echo "date: $date" >> $1.md
-			echo "tags: " >> $1.md
-			echo "categories: " >> $1.md
-			echo "---" >> $1.md
+			echo "date: $date" >> "source/post/$1/$1.md"
+			echo "tags: " >> "source/post/$1/$1.md"
+			echo "categories: " >> "source/post/$1/$1.md"
+			echo "---" >> "source/post/$1/$1.md"
 		fi
 	fi
 }
