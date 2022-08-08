@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Web',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)
+        textTheme: GoogleFonts.sourceCodeProTextTheme(Theme.of(context).textTheme)
       ),
       home: const Home(),
     );
