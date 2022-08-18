@@ -37,7 +37,6 @@ dependencies:
   intl: ^0.17.0
   get_it: ^7.2.0
   collection: ^1.16.0
-  markdown_widget: ^1.2.9
   url_launcher: ^6.1.5
   flutter_markdown: ^0.6.10+3
   cached_network_image: ^3.2.1
