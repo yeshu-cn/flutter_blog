@@ -39,7 +39,15 @@ function g() {
 }
 
 function s() {
-  flutter run -d chrome &
+  SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+  echo $SCRIPT_DIR
+  # 必须进入工程目录执行,目录中间存在空格，必须加上双引号
+  cd "$SCRIPT_DIR"
+  flutter run -d chrome --web-renderer html &
+}
+
+function d() {
+  echo
 }
 
 
@@ -47,6 +55,7 @@ if [ "new" == "$1" ]; then
 	createNewPost "$2"
 elif [ "d" == "$1" ]; then
 	echo "deploy to github"
+	d
 elif [ "s" == "$1" ]; then
 	echo "start server"
   s
