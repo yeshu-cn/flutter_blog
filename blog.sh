@@ -1,41 +1,58 @@
 #!/bin/bash
 
-echo "Shell 传递参数实例！";
-echo "执行的文件名：$0";
-echo "第一个参数为：$1";
-echo "第二个参数为：$2";
-echo "第三个参数为：$3";
+
+# echo "Shell 传递参数实例！";
+# echo "执行的文件名：$0";
+# echo "第一个参数为：$1";
+# echo "第二个参数为：$2";
+# echo "第三个参数为：$3";
+
+postPath=./source/post
+assetsPath=./assets
+webPath=./web
 
 function createNewPost() {
 	if [ -z "$1" ]; then
 		echo "please input post name"
 	else
-		if [ -a "source/post/$1/$1.md" ]; then
-			echo "file $1.md already exists!!"
+	  postFile="$postPath/$1/$1.md"
+		if [ -a "$postFile" ]; then
+			echo "$postFile already exists!!"
 		else
-			mkdir "source/post/$1"
-			echo "create post file: srouce/post/$1/$1.md"
-			touch "source/post/$1/$1.md"
-			echo "---" > "source/post/$1/$1.md"
-			echo "title: $1.md" >> "source/post/$1/$1.md"
+			mkdir "$postPath/$1"
+			echo "create post file: $postFile"
+			touch "$postFile"
+			echo "---" > "$postFile"
+			echo "title: $1.md" >> "$postFile"
 			date=$(date '+%Y-%m-%d %H:%M:%S')
-			echo "date: $date" >> "source/post/$1/$1.md"
-			echo "tags: " >> "source/post/$1/$1.md"
-			echo "categories: " >> "source/post/$1/$1.md"
-			echo "---" >> "source/post/$1/$1.md"
+			# shellcheck disable=SC2129
+			echo "date: $date" >> "$postFile"
+			echo "tags: " >> "$postFile"
+			echo "categories: " >> "$postFile"
+			echo "---" >> "$postFile"
 		fi
 	fi
+}
+
+function g() {
+  ./data_generator/bin/blog.exe $postPath $assetsPath $webPath
+}
+
+function s() {
+  flutter run -d chrome &
 }
 
 
 if [ "new" == "$1" ]; then
 	createNewPost "$2"
 elif [ "d" == "$1" ]; then
-	echo "deploy blog"
-elif [ "clean" == "$1" ]; then
-	echo "clean"
+	echo "deploy to github"
+elif [ "s" == "$1" ]; then
+	echo "start server"
+  s
 elif [ "g" == "$1" ]; then
-	echo "generate blog data"
+	echo "generate data"
+	g
 else
 	echo "unkown command"
 fi
