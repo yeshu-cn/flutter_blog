@@ -7,10 +7,11 @@ date: 2015-06-03 03:22:57
 tags:
 ---
 
-#ActionBar使用 
+# ActionBar使用 
+
 资料：<http://developer.android.com/training/basics/actionbar/index.html>
 
-##基本使用
+## 基本使用
 __Android 3.0(API Level 11)后开始使用ActionBar__
 
 __Android 3.0以上版本使用ActionBar__
@@ -122,7 +123,7 @@ public void onCreate(Bundle savedInstanceState) {
 
 __ActionBar上添加Navigation Tabs__
 
-##ActionBar样式设置
+## ActionBar样式设置
 __基本样式__
 
 * Theme.Holo
@@ -262,7 +263,7 @@ res/values/themes.xml
 </resources>
 ```
 
-##Overlaying the Action Bar
+## Overlaying the Action Bar
 
 仅支持Android 3.0及其以上
 ```xml

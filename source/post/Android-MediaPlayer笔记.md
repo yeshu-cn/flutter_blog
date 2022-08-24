@@ -181,6 +181,7 @@ startForeground(NOTIFICATION_ID, notification);
 
 
 只有真正需要时才使用`foreground service`状态，不用是release it
+
 ```java
 stopForeground(true);
 ```

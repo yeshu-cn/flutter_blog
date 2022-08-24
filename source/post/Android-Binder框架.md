@@ -10,7 +10,7 @@ tags:
 Binder框架用途：
 实现Android中进程间通信，Apk调用系统服务时就是使用binder框架。
 
-#####框架组成部分
+##### 框架组成部分
 Service(例如音乐服务)
 Binder Driver（驱动程序，类似内核中一块共享的内存空间）
 Client（Apk程序）
@@ -30,7 +30,7 @@ protected boolean onTransact(int code, Parcel data, Parcel reply, int flags) thr
 }
 ```
 
-######Service
+###### Service
 Service其实就是一个Binder对象实例，但该实例一旦创建时就会启动一个线程等待接收Binder驱动发送过来的消息，收到消息后执行Binder类中的onTransact()方法。
 ######Binder Driver
 任意一个Service创建时，都会在Binder驱动中创建一个Binder类型的mRemote对象

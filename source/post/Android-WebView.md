@@ -4,7 +4,7 @@ date: 2016-09-14 16:13:12
 tags:
 ---
 
-##### WebView默认会保存表单数据，输入表单时会弹出一个历史列表的下拉窗口
+## WebView默认会保存表单数据，输入表单时会弹出一个历史列表的下拉窗口
 
 ```java
 	/**
@@ -22,7 +22,7 @@ webview.clearFormData();
 
 [disabling autosuggestion on webview](http://stackoverflow.com/questions/7404798/disabling-autosuggestion-on-webview)
 
-##### webView默认禁用javascript,造成加载html页面交互异常
+## WebView默认禁用javascript,造成加载html页面交互异常
 
 ```java
 	/**
