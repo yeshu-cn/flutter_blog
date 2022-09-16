@@ -15,20 +15,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const TopBar(
-              highLightHome: true,
-            ),
-            PostList(
-              loadData: getPostList,
-            ),
-            const SizedBox(
-              height: 80,
-            ),
-          ],
+      body: SelectionArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const TopBar(
+                highLightHome: true,
+              ),
+              PostList(
+                loadData: getPostList,
+              ),
+              const SizedBox(
+                height: 80,
+              ),
+            ],
+          ),
         ),
       ),
     );

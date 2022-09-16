@@ -17,36 +17,38 @@ class _CategoriesState extends State<Categories> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const TopBar(highLightCategory: true,),
-            Padding(
-              padding: const EdgeInsets.only(left: 500, right: 500, top: 60),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Categories', style: theme.textTheme.headline6,),
-                ],
+      body: SelectionArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const TopBar(highLightCategory: true,),
+              Padding(
+                padding: const EdgeInsets.only(left: 500, right: 500, top: 60),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Categories', style: theme.textTheme.headline6,),
+                  ],
+                ),
               ),
-            ),
-            FutureBuilder(builder: (BuildContext context, AsyncSnapshot<List<CategoryItem>> snapshot){
-              if (snapshot.hasData) {
-                var categoryItems = snapshot.data!.map((e) => _buildItem(e)).toList();
-                categoryItems.insert(0, _buildCategoryCountText(snapshot.data!.length));
-                return Padding(
-                  padding: const EdgeInsets.only(left: 500, right: 500),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: categoryItems,
-                  ),
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            }, future: getIt.get<PostService>().getCategories(),),
-          ],
+              FutureBuilder(builder: (BuildContext context, AsyncSnapshot<List<CategoryItem>> snapshot){
+                if (snapshot.hasData) {
+                  var categoryItems = snapshot.data!.map((e) => _buildItem(e)).toList();
+                  categoryItems.insert(0, _buildCategoryCountText(snapshot.data!.length));
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 500, right: 500),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: categoryItems,
+                    ),
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              }, future: getIt.get<PostService>().getCategories(),),
+            ],
+          ),
         ),
       ),
     );
