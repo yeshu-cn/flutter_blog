@@ -57,14 +57,13 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
 
   Widget _buildMarkdown(int createTime, String data) {
-    return Markdown(
+    return MarkdownBody(
       selectable: true,
       data: data,
       extensionSet: md.ExtensionSet(
         md.ExtensionSet.gitHubFlavored.blockSyntaxes,
         [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
       ),
-      shrinkWrap: true,
       // styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
       //   // codeblockPadding: EdgeInsets.all(100),
       //   // blockquote: const TextStyle(color: Colors.red),

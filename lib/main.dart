@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         textTheme: GoogleFonts.sourceCodeProTextTheme(Theme.of(context).textTheme)
       ),
-      home: const Home(),
+      home: const SelectionArea(
+        child: Home(),
+      ),
     );
   }
 }
