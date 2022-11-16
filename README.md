@@ -4,6 +4,16 @@ Flutter web实现的基于Markdown的Blog
 
 ![](editor.png)
 
+优点：
+1. 使用markdown写blog,兼容hexo
+2. 编辑器可以直接复制图片，图片会打包在web项目中，所有blog数据都集中在一起。不用去三方找图床，也避免以后图片资源不见了，显示不了图片到问题
+3. 利用Github Actions和Github pages实现自动编译部署
+
+缺点：
+1. Flutter Web启动太太太太慢了
+2. Flutter Web Markdown的渲染不好看，选中复制字符等操作很不流畅。
+
+写这个东西的初衷是因为用hexo的时候写带图片的文章太麻烦了，而且随着hexo的升级，总有可能编译不过。
 
 ## 使用
 1. 创建markdown文章 
