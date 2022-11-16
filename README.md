@@ -4,6 +4,7 @@ Flutter web实现的基于Markdown的Blog
 
 ![](editor.png)
 
+
 ## 使用
 1. 创建markdown文章 
 2. 运行脚本工具，将markdown文件转换为json文件，存放在assets目录中
@@ -11,7 +12,7 @@ Flutter web实现的基于Markdown的Blog
 4. 上传到github，利用Github action自动编译发布网站到git page上显示
 
 ### Markdown文章转换为json接口文件
-使用markdown_editor
+使用markdown_editor，项目地址：https://github.com/yeshu-cn/blog_markdown_editor
 1. 创建，编辑，预览markdown文件
 2. 生成json接口文件
 3. 启动项目本地预览blog
